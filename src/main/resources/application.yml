@@ -15,4 +15,4 @@ spring:
 logging:
   level:
     root: warn
-    com.mp.dao: trace
+    com.mp: trace
