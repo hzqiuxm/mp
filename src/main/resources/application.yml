@@ -1,0 +1,18 @@
+server:
+  port: 10086
+
+spring:
+  application:
+    name: @artifactId@
+# 数据源
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 123321qq
+      url: jdbc:mysql://localhost:3306/mp?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+logging:
+  level:
+    root: warn
+    com.mp.dao: trace
