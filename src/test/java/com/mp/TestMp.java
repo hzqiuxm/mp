@@ -180,8 +180,6 @@ public class TestMp {
 
 //        queryWrapper.likeRight("name","王")
 //                .and(wq->wq.lt("age",30).or().isNotNull("email"));
-
-
         queryWrapper.nested(wq->wq.lt("age",30).or().isNotNull("email"))
                 .likeRight("name","王");
 
@@ -206,23 +204,101 @@ public class TestMp {
 
 
     /**
-     * select只返回指定字段,结构还是完整的，其它字段的值都是空
+     * select只返回指定字段,结构还是完整的，其它字段的值都是空（）
      * 两种思路，一种是指定要返回的，一种是排除不要返回的
      */
     @Test
     public void testSelect1(){
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-
-
 //        queryWrapper.select("name","email");
-
-
         queryWrapper.select(User.class,info->!info.getColumn().equals("create_time"));
 
         List<User> users = userMapper.selectList(queryWrapper);
         users.forEach(System.out::println);
     }
 
+
+    /**
+     * 带实体条件的构造器用法
+     */
+    @Test
+    public void testSelectByWrapperEntity(){
+
+        User whereUser = new User();
+        whereUser.setName("临江仙");
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>(whereUser,"name,email");
+//        queryWrapper.likeRight("name","王");
+
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+
+    /**
+     * Alleq的用法
+     */
+    @Test
+    public void testAlleq(){
+
+        Map map = new HashMap();
+        map.put("name","临江仙");
+        map.put("age",33);
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.allEq(map);
+
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+    /**
+     * SelectMap使用，只返回需要的字段结构
+     */
+    @Test
+    public void testSelectMap(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("name","age").likeRight("name","临");
+
+        List<Map<String, Object>> users = userMapper.selectMaps(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+
+    /**
+     * 按照直属上级分组，查询每组的平均年龄、最大年龄、最小年龄，并且只取年龄总和小于500的组
+     * select avg(age) avg_age,min(age) min_age,max(age) max_age from user
+     * groupby manager_id having sum(age)<500
+     */
+    @Test
+    public void testSelectMap2(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("avg(age) avg_age","min(age) min_age","max(age) max_age")
+                .groupBy("manager_id").having("sum(age)<{0}",500);
+
+        List<Map<String, Object>> users = userMapper.selectMaps(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+    @Test
+    public void testCount(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name","小");
+
+        Integer integer = userMapper.selectCount(queryWrapper);
+
+        System.out.println("总记录数有："+ integer);
+
+    }
+
+    @Test
+    public void testLamda(){
+
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+        lambdaQuery.like(User::getName,"阮");
+
+        List<Map<String, Object>> users = userMapper.selectMaps(lambdaQuery);
+        users.forEach(System.out::println);
+    }
 
 }
