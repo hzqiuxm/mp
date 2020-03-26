@@ -1,0 +1,10 @@
+${AnsiColor.BRIGHT_GREEN}                 _           _   _                       _            __             __
+${AnsiColor.BRIGHT_GREEN}                 | |         | | (_)                     | |          / /             \ \
+${AnsiColor.BRIGHT_GREEN}  _ __ ___  _   _| |__   __ _| |_ _  ___ ___ ______ _ __ | |_   _ ___| |_ __ ___  _ __ | |
+${AnsiColor.BRIGHT_GREEN}| '_ ` _ \| | | | '_ \ / _` | __| |/ __/ __|______| '_ \| | | | / __| | '_ ` _ \| '_ \| |
+${AnsiColor.BRIGHT_GREEN} | | | | | | |_| | |_) | (_| | |_| | (__\__ \      | |_) | | |_| \__ \ | | | | | | |_) | |
+${AnsiColor.BRIGHT_GREEN}|_| |_| |_|\__, |_.__/ \__,_|\__|_|\___|___/      | .__/|_|\__,_|___/ |_| |_| |_| .__/| |
+${AnsiColor.BRIGHT_GREEN}             __/ |                                 | |                \_\        | |  /_/
+${AnsiColor.BRIGHT_GREEN}            |___/                                  |_|                           |_|
+${AnsiColor.BRIGHT_GREEN}
+${AnsiColor.BRIGHT_CYAN}:: BladeX :: ${spring.application.name}:${AnsiColor.RED}${blade.env}${AnsiColor.BRIGHT_CYAN} :: Running SpringBoot ${spring-boot.version} :: ${AnsiColor.BRIGHT_BLACK}
