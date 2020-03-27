@@ -3,6 +3,7 @@ package com.mp;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mp.biz.User;
 import org.junit.Assert;
 import org.junit.Test;
@@ -300,5 +301,32 @@ public class TestMp {
         List<Map<String, Object>> users = userMapper.selectMaps(lambdaQuery);
         users.forEach(System.out::println);
     }
+
+
+    @Test
+    public void testMySql(){
+
+        LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
+        lambdaQuery.like(User::getName,"阮");
+
+        List<User> users = userMapper.selectAll(lambdaQuery);
+        users.forEach(System.out::println);
+
+    }
+
+
+    @Test
+    public void testSelectByPage1(){
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("id");
+
+
+        Page<User> users = userMapper.selectPage(new Page<>(1, 5), queryWrapper);
+
+        users.getRecords().forEach(System.out::println);
+
+    }
+
 
 }

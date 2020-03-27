@@ -16,3 +16,5 @@ logging:
   level:
     root: warn
     com.mp: trace
+mybatis-plus:
+  mapper-locations: com/mp/mapper/*
