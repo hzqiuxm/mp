@@ -18,3 +18,7 @@ logging:
     com.mp: trace
 mybatis-plus:
   mapper-locations: com/mp/mapper/*
+  global-config:
+    db-config:
+      logic-not-delete-value: 0
+      logic-delete-value: 1

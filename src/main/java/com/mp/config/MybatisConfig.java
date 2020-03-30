@@ -14,9 +14,15 @@ import org.springframework.context.annotation.Configuration;
 public class MybatisConfig {
 
 
+    /**
+     * 物理分页插件
+     * @return
+     */
     @Bean
     public PaginationInterceptor paginationInterceptor(){
 
         return new PaginationInterceptor();
     }
+
+
 }

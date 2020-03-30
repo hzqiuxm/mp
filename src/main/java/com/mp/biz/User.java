@@ -1,10 +1,11 @@
 package com.mp.biz;
-import com.baomidou.mybatisplus.annotation.SqlCondition;
-import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
-import	java.time.LocalDateTime;
+import java.time.LocalDateTime;
 
 /**
  * Copyright © 2020年 mp. All rights reserved.
@@ -14,9 +15,10 @@ import	java.time.LocalDateTime;
  */
 @Data
 @TableName("user")
-public class User {
+public class User extends Model<User> {
 
 
+    @TableId(type = IdType.AUTO)
     private Long id ;
     private String name;
     private Integer age;

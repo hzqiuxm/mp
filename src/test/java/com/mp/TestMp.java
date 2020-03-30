@@ -2,7 +2,9 @@ package com.mp;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mp.biz.User;
 import org.junit.Assert;
@@ -31,11 +33,32 @@ public class TestMp {
     @Autowired
     private UserMapper userMapper;
 
+
+
+
+
+    /**
+     * 插入操作
+     */
+    @Test
+    public void testInsert(){
+
+        User user = new User();
+
+        user.setName("蔡琴");
+        user.setAge(18);
+        user.setEmail("caiqing@163.com");
+        user.setManagerId(1L);
+        user.setCreateTime(LocalDateTime.now());
+
+        userMapper.insert(user);
+    }
+
     /**
      * 查询所有
      */
     @Test
-    public void select(){
+    public void testSelect(){
         List<User> users = userMapper.selectList(null);
         Assert.assertEquals(5,5);
         users.forEach(System.out::println);
@@ -315,6 +338,9 @@ public class TestMp {
     }
 
 
+    /**
+     * 分页查询
+     */
     @Test
     public void testSelectByPage1(){
 
@@ -327,6 +353,71 @@ public class TestMp {
         users.getRecords().forEach(System.out::println);
 
     }
+
+
+    /**
+     * 根据Id逐渐来更新
+     */
+    @Test
+    public void testUpdate1(){
+
+        User user = new User();
+        user.setId(15L);
+        user.setAge(32);
+        int rows = userMapper.updateById(user);
+
+        Assert.assertEquals(1,rows);
+
+    }
+
+
+    /**
+     * 使用queryWrapper构建where更新条件
+     * 更新名字代王的，年龄小于30岁，改成20
+     */
+    @Test
+    public void testUpdate2(){
+
+        User user = new User();
+        user.setAge(20);
+
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.likeRight("name","王").lt("age",30);
+
+        int rows = userMapper.update(user,updateWrapper);
+
+        Assert.assertEquals(2,rows);
+
+    }
+
+
+    /**
+     * 和上一个测试用例作用一样，只是写法更优雅，不用传user对象了
+     */
+    @Test
+    public void testUpdate3(){
+
+
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.likeRight("name","王").lt("age",30).set("age",21);
+
+        int rows = userMapper.update(null,updateWrapper);
+
+        Assert.assertEquals(2,rows);
+
+    }
+
+    /**
+     * LambdaUpdateChainWrapper方式更新
+     */
+    @Test
+    public void testUpdate4(){
+
+        boolean update = new LambdaUpdateChainWrapper<User>(userMapper).eq(User::getName, "王阳明").set(User::getAge, 50).update();
+
+    }
+
+
 
 
 }
