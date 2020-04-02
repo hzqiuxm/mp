@@ -60,7 +60,7 @@ public class TestMp {
     @Test
     public void testSelect(){
         List<User> users = userMapper.selectList(null);
-        Assert.assertEquals(5,5);
+
         users.forEach(System.out::println);
     }
 
