@@ -1,6 +1,8 @@
 package com.mp;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.mp.biz.BuDui;
 import com.mp.biz.User;
 import com.mp.service.UserService;
 import org.junit.Test;
@@ -63,9 +65,11 @@ public class ARTest {
     @Test
     public void testUserService1(){
 
-        User user = userService.getById(18);
+        User user = userService.getById(1);
 
         System.out.println(user);
+
+
     }
 
 
@@ -80,6 +84,33 @@ public class ARTest {
     public void testUserService3(){
 
         System.out.println(userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getName,"宋江")));
+    }
+
+
+    /**
+     * 数据库字段json格式的测试，budui是一个json类型字段，对应实体类类型String
+     * {"type": "步兵", "count": 30, "level": "高阶"}
+     */
+    @Test
+    public void testUserJson(){
+
+        User user = userService.getById(1);
+
+        System.out.println(user);
+
+//        JSON json = JSONUtil.parse(user.getBudui());
+
+//        System.out.println(json);
+
+//        JSON.parseObject("user",User.class);
+        Object json = JSON.toJSON(user.getBudui());
+
+        System.out.println(json);
+
+        BuDui buDui = JSON.parseObject(user.getBudui(), BuDui.class);
+
+        System.out.println(buDui);
+
     }
 
 }

@@ -24,6 +24,7 @@ public class User extends Model<User> {
     private Integer age;
     private String email;
     private Long managerId;
+    private String budui;
     private LocalDateTime createTime;
 
     public User(String name, Integer age, String email, Long managerId, LocalDateTime createTime) {

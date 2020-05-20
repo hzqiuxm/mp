@@ -356,13 +356,13 @@ public class TestMp {
 
 
     /**
-     * 根据Id逐渐来更新
+     * 根据Id主键来更新
      */
     @Test
     public void testUpdate1(){
 
         User user = new User();
-        user.setId(15L);
+        user.setId(12L);
         user.setAge(32);
         int rows = userMapper.updateById(user);
 
