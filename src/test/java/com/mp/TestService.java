@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mp.biz.Player;
 import com.mp.service.PlayerService;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -88,6 +89,14 @@ public class TestService {
         Page page = playerService.pageMaps(objectPage);
 
         System.out.println("result: " + page.getRecords());
+    }
+
+
+    @DisplayName("测试自定义的查询方法")
+    @Test
+    public void testGetByName(){
+
+        System.out.println(playerService.seleltByName("临江仙"));
     }
 
 }

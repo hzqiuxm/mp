@@ -23,4 +23,6 @@ public interface PlayerMapper extends BaseMapper<Player> {
 
     @Select("select * from player ${ew.customSqlSegment}")
     List<Player> mySelectPlayers(@Param(Constants.WRAPPER)Wrapper<Player> wrapper);
+
+
 }

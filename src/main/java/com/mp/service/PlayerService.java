@@ -1,5 +1,6 @@
 package com.mp.service;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mp.PlayerMapper;
 import com.mp.biz.Player;
@@ -13,4 +14,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PlayerService extends ServiceImpl<PlayerMapper, Player> {
+
+
+    /**
+     * 根据用户名称查询
+     * @param name
+     * @return
+     */
+    public Player seleltByName(String name){
+
+        return this.getOne(Wrappers.<Player>lambdaQuery().eq(Player::getName,name));
+    }
 }
