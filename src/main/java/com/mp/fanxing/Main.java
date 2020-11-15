@@ -1,5 +1,7 @@
 package com.mp.fanxing;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * Copyright © 2020年 mp. All rights reserved.
  *
@@ -27,5 +29,25 @@ public class Main {
 //        List<Object> objList = objects;
 //
 //        ArrayList<Object> objs = new ArrayList<Dog>();
+
+
+//        for (int i = 0; i < 100; i++) {
+//            int nextInt = new Random().nextInt(2);
+//            System.out.println(nextInt);
+//        }
+
+
+        System.out.println(getDescriptKey("获得{jika}宝物"));
+
+
+    }
+
+    public static String getDescriptKey(String description){
+
+        int beginIndex = description.indexOf("{");
+        int endIndex = description.indexOf("}");
+
+        return StrUtil.sub(description,beginIndex+1,endIndex);
+
     }
 }

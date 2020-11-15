@@ -277,6 +277,18 @@ public class TestMp {
     }
 
     /**
+     * 测试多相等条件查询
+     */
+    @Test
+    public void testMoreEq(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name","临江仙").eq("age",35);
+
+        List<User> users = userMapper.selectList(queryWrapper);
+        users.forEach(System.out::println);
+    }
+
+    /**
      * SelectMap使用，只返回需要的字段结构
      */
     @Test
