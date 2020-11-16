@@ -7,18 +7,17 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mp.biz.User;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Copyright © 2020年 mp. All rights reserved.
@@ -27,7 +26,7 @@ import java.util.Map;
  * @date 2020/3/25 15:21
  */
 @SpringBootTest
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 public class TestMp {
 
     @Autowired
@@ -378,7 +377,7 @@ public class TestMp {
         user.setAge(32);
         int rows = userMapper.updateById(user);
 
-        Assert.assertEquals(1,rows);
+        assertEquals(1,rows);
 
     }
 
@@ -398,7 +397,7 @@ public class TestMp {
 
         int rows = userMapper.update(user,updateWrapper);
 
-        Assert.assertEquals(2,rows);
+        assertEquals(2,rows);
 
     }
 
@@ -415,7 +414,7 @@ public class TestMp {
 
         int rows = userMapper.update(null,updateWrapper);
 
-        Assert.assertEquals(2,rows);
+        assertEquals(2,rows);
 
     }
 
