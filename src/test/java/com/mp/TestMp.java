@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mp.biz.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  * @date 2020/3/25 15:21
  */
 @SpringBootTest
-//@RunWith(SpringRunner.class)
 public class TestMp {
 
     @Autowired
@@ -34,11 +34,7 @@ public class TestMp {
 
 
 
-
-
-    /**
-     * 插入操作
-     */
+    @DisplayName("简单插入操作")
     @Test
     public void testInsert(){
 
@@ -53,9 +49,8 @@ public class TestMp {
         userMapper.insert(user);
     }
 
-    /**
-     * 查询所有
-     */
+
+    @DisplayName("查询所有记录")
     @Test
     public void testSelect(){
         List<User> users = userMapper.selectList(null);
@@ -63,6 +58,8 @@ public class TestMp {
         users.forEach(System.out::println);
     }
 
+
+    @DisplayName("根据ID批量查询")
     @Test
     public void testCollectionSelect(){
 
@@ -72,6 +69,7 @@ public class TestMp {
     }
 
 
+    @DisplayName("使用Map作为参数查询")
     @Test
     public void testMapSelect(){
 
@@ -82,15 +80,17 @@ public class TestMp {
         users.forEach(System.out::println);
     }
 
+    @DisplayName("lambda链式查询")
     @Test
     public void testChainSelect(){
         LambdaQueryWrapper<User> userLambdaQueryWrapper = Wrappers.<User>lambdaQuery();
-        userLambdaQueryWrapper.eq(User::getName,"鹊桥仙");
+        userLambdaQueryWrapper.eq(User::getName,"临江仙").eq(User::getAge,35);
         List<User> users = userMapper.selectList(userLambdaQueryWrapper);
         users.forEach(System.out::println);
 
     }
 
+    @DisplayName("时间日期查询")
     @Test
     public void getTimeCondition(){
 
@@ -109,6 +109,7 @@ public class TestMp {
     /**
      * 查找王姓，年龄大于25，创建时间在2020-03-25之前用户，根据id降序排序
      */
+    @DisplayName("组合排序查询")
     @Test
     public void testSelectByWrapper1(){
 
@@ -124,6 +125,7 @@ public class TestMp {
     }
 
 
+    @DisplayName("创建一个User")
     @Test
     public void createUser(){
         userMapper.insert(new User("江城子",39,"slq@163.com",1L, LocalDateTime.now()));
@@ -132,9 +134,9 @@ public class TestMp {
 
 
     /**
-     * apply和insql的使用
      * 查找直属上级是鹊姓，创建时间在2019-2-14号的用户信息
      */
+    @DisplayName("apply和insql的使用")
     @Test
     public void testApply(){
 
@@ -142,18 +144,17 @@ public class TestMp {
         queryWrapper.apply("date_format(create_time,'%Y-%m-%d')={0}","2019-02-14")
                 .inSql("manager_id","select id from user where name like '鹊%'");
 
-
         List<User> users = userMapper.selectList(queryWrapper);
         users.forEach(System.out::println);
     }
 
 
     /**
-     * and()lambda表达式的使用
      * between的使用
      * 名字为王姓且(年龄大于20但小于40并且邮箱不为空)
      * name like '王%', age<40 or email !=null
      */
+    @DisplayName("and()lambda表达式的使用")
     @Test
     public void testAndLamda1(){
 
@@ -172,48 +173,48 @@ public class TestMp {
 
 
     /**
-     * or()lambda表达式的使用
      * between的使用
-     * 名字为王姓或(年龄大于20但小于40并且邮箱不为空)
+     * 名字为王姓或(年龄大于10但小于50并且邮箱不为空)
      * name like '王%', age<40 or email !=null
      */
+    @DisplayName("or()lambda表达式的使用")
     @Test
     public void testAndLamda2(){
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
 
         queryWrapper.likeRight("name" , "王")
-                .or(wq->wq.between("age",20,30))
+                .or(wq->wq.between("age",10,50))
                 .isNotNull("email");
 
+        //name LIKE ? OR (age BETWEEN ? AND ?) AND email IS NOT NULL
         List<User> users = userMapper.selectList(queryWrapper);
         users.forEach(System.out::println);
     }
 
 
     /**
-     * nested使用
      * （年龄小于30或邮箱不为空）并且名字为王姓
      *  (age<30 or email!=null) and name like '王%'
      */
+    @DisplayName("nested嵌套查询使用")
     @Test
     public void testchaxun1(){
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-
-//        queryWrapper.likeRight("name","王")
-//                .and(wq->wq.lt("age",30).or().isNotNull("email"));
         queryWrapper.nested(wq->wq.lt("age",30).or().isNotNull("email"))
                 .likeRight("name","王");
 
+        //(age < ? OR email IS NOT NULL) AND name LIKE ?
         List<User> users = userMapper.selectList(queryWrapper);
         users.forEach(System.out::println);
     }
 
 
-    /** in的使用  limit使用
+    /**
      * 年龄为 25,26,27,28,29
      */
+    @DisplayName("in和limit使用")
     @Test
     public void testchaxun2(){
 
@@ -230,6 +231,7 @@ public class TestMp {
      * select只返回指定字段,结构还是完整的，其它字段的值都是空（）
      * 两种思路，一种是指定要返回的，一种是排除不要返回的
      */
+    @DisplayName("用select返回指定字段查询")
     @Test
     public void testSelect1(){
 
@@ -242,9 +244,7 @@ public class TestMp {
     }
 
 
-    /**
-     * 带实体条件的构造器用法
-     */
+    @DisplayName("带实体条件的构造器用法")
     @Test
     public void testSelectByWrapperEntity(){
 
@@ -258,9 +258,7 @@ public class TestMp {
     }
 
 
-    /**
-     * Alleq的用法
-     */
+    @DisplayName("map和Alleq的用法")
     @Test
     public void testAlleq(){
 
@@ -275,9 +273,8 @@ public class TestMp {
         users.forEach(System.out::println);
     }
 
-    /**
-     * 测试多相等条件查询
-     */
+
+    @DisplayName(" 多个eq条件查询")
     @Test
     public void testMoreEq(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -287,9 +284,8 @@ public class TestMp {
         users.forEach(System.out::println);
     }
 
-    /**
-     * SelectMap使用，只返回需要的字段结构
-     */
+
+    @DisplayName("SelectMap使用，只返回需要的字段结构")
     @Test
     public void testSelectMap(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -305,6 +301,7 @@ public class TestMp {
      * select avg(age) avg_age,min(age) min_age,max(age) max_age from user
      * groupby manager_id having sum(age)<500
      */
+    @DisplayName("分组查询")
     @Test
     public void testSelectMap2(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -315,6 +312,7 @@ public class TestMp {
         users.forEach(System.out::println);
     }
 
+    @DisplayName("统计查询")
     @Test
     public void testCount(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -326,6 +324,7 @@ public class TestMp {
 
     }
 
+    @DisplayName("返回map结构简单的Lambda表达式查询")
     @Test
     public void testLamda(){
 
@@ -338,6 +337,7 @@ public class TestMp {
 
 
     @Test
+    @DisplayName("返回List结构简单的Lambda表达式查询")
     public void testMySql(){
 
         LambdaQueryWrapper<User> lambdaQuery = Wrappers.<User>lambdaQuery();
@@ -349,9 +349,7 @@ public class TestMp {
     }
 
 
-    /**
-     * 分页查询
-     */
+    @DisplayName("分页查询")
     @Test
     public void testSelectByPage1(){
 
@@ -366,9 +364,7 @@ public class TestMp {
     }
 
 
-    /**
-     * 根据Id主键来更新
-     */
+    @DisplayName("根据Id主键来更新")
     @Test
     public void testUpdate1(){
 
@@ -383,9 +379,9 @@ public class TestMp {
 
 
     /**
-     * 使用queryWrapper构建where更新条件
      * 更新名字代王的，年龄小于30岁，改成20
      */
+    @DisplayName("使用updateWrapper构建where更新条件")
     @Test
     public void testUpdate2(){
 
@@ -405,6 +401,7 @@ public class TestMp {
     /**
      * 和上一个测试用例作用一样，只是写法更优雅，不用传user对象了
      */
+    @DisplayName("优雅.set使用updateWrapper构建where更新条件")
     @Test
     public void testUpdate3(){
 
@@ -418,9 +415,8 @@ public class TestMp {
 
     }
 
-    /**
-     * LambdaUpdateChainWrapper方式更新
-     */
+
+    @DisplayName("LambdaUpdateChainWrapper方式链式更新")
     @Test
     public void testUpdate4(){
 

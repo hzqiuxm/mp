@@ -3,6 +3,7 @@ package com.mp;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.mp.biz.Player;
 import com.mp.service.PlayerService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,7 +19,6 @@ import java.util.List;
  * @date 2020/3/30 13:38
  */
 @SpringBootTest
-//@RunWith(SpringRunner.class)
 public class TestPlayer {
 
     @Autowired
@@ -28,6 +28,7 @@ public class TestPlayer {
 
 
 
+    @DisplayName("单值插入")
     @Test
     public void testInsert(){
 
@@ -37,6 +38,7 @@ public class TestPlayer {
     }
 
 
+    @DisplayName("批量插入")
     @Test
     public void testInsertService(){
 
@@ -67,9 +69,7 @@ public class TestPlayer {
     }
 
 
-    /**
-     * 逻辑删除示例
-     */
+    @DisplayName("逻辑删除示例")
     @Test
     public void testLogicDelete(){
 
@@ -79,9 +79,7 @@ public class TestPlayer {
     }
 
 
-    /**
-     * 查询将排除逻辑删除的数据
-     */
+    @DisplayName("查询将排除逻辑删除的数据")
     @Test
     public void testSelectLogicDelete(){
 
@@ -93,9 +91,7 @@ public class TestPlayer {
     }
 
 
-    /**
-     * 查询逻辑删除的数据
-     */
+    @DisplayName("查询逻辑删除的数据")
     @Test
     public void testSelectLogicDelete2(){
 

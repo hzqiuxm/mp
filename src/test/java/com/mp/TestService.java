@@ -26,6 +26,7 @@ public class TestService {
     @Autowired
     PlayerService playerService;
 
+    @DisplayName("根据ID查询")
     @Test
     public void testGet(){
 
@@ -41,6 +42,7 @@ public class TestService {
      * Player(id=2, name=鹊桥仙, age=30, email=queqiaoxian@163.com, managerId=0, createTime=2020-03-30T13:46, updateTime=2020-03-30T13:46, version=1, deleted=0),
      * Player(id=4, name=宋江, age=60, email=songjiamng@163.com, managerId=1, createTime=2020-03-30T13:56:46, updateTime=2020-03-30T13:56:46, version=1, deleted=0)]
      */
+    @DisplayName("不带条件的分页查询,对象的方式返回")
     @Test
     public void testpage1(){
 
@@ -53,10 +55,7 @@ public class TestService {
     }
 
 
-    /**
-     * 带查询条件分页查询
-     *
-     */
+    @DisplayName("带查询条件分页查询")
     @Test
     public void testpage2(){
 
@@ -76,6 +75,7 @@ public class TestService {
      *  {update_time=2020-03-30 13:46:00.0, deleted=0, create_time=2020-03-30 13:46:00.0, manager_id=0, name=鹊桥仙, id=2, version=1, age=30, email=queqiaoxian@163.com},
      *  {update_time=2020-03-30 13:56:46.0, deleted=0, create_time=2020-03-30 13:56:46.0, manager_id=1, name=宋江, id=4, version=1, age=60, email=songjiamng@163.com}]
      */
+    @DisplayName("Map数组方式返回查询")
     @Test
     public void testpage3(){
 

@@ -22,6 +22,7 @@ public class User extends Model<User> {
     private Long id ;
     private String name;
     private Integer age;
+//    @TableField(select = false) 字段还是返回，值为null
     private String email;
     private Long managerId;
     private String budui;
