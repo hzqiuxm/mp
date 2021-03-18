@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.mp.biz.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-
     @Select("select * from user ${ew.customSqlSegment}")
     List<User> selectAll(@Param(Constants.WRAPPER) Wrapper<User> wrapper);
+
 }
